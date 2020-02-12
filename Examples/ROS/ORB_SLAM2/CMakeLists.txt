@@ -40,6 +40,11 @@ endif()
 
 find_package(Eigen3 3.1.0 REQUIRED)
 find_package(Pangolin REQUIRED)
+find_package(PCL 1.7 REQUIRED)
+
+include_directories(${PCL_INCLUDE_DIRS})
+link_directories(${PCL_LIBRARY_DIRS})
+add_definitions(${PCL_DEFINITIONS})
 
 include_directories(
 ${PROJECT_SOURCE_DIR}
@@ -64,6 +69,22 @@ src/ros_mono.cc
 )
 
 target_link_libraries(Mono
+${LIBS}
+)
+
+rosbuild_add_executable(Monopub
+src/ros_mono_pub.cc
+)
+
+target_link_libraries(Monopub
+${LIBS}
+)
+
+rosbuild_add_executable(Monosub
+src/ros_mono_sub.cc
+)
+
+target_link_libraries(Monosub
 ${LIBS}
 )
 
@@ -95,4 +116,3 @@ src/ros_rgbd.cc
 target_link_libraries(RGBD
 ${LIBS}
 )
-
